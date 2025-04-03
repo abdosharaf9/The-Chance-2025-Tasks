@@ -1,4 +1,4 @@
-package sudoko
+package week_1.sudoko
 
 fun main() {
 

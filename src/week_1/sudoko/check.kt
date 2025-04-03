@@ -1,4 +1,4 @@
-package sudoko
+package week_1.sudoko
 
 /*
 Options for row/column/subgrid: null, empty, invalid size, invalid characters, invalid number range,
@@ -471,7 +471,7 @@ fun main() {
     // endregion
 }
 
-fun check(name: String, result: Boolean, correctResult: Boolean) {
+private fun check(name: String, result: Boolean, correctResult: Boolean) {
     if (result == correctResult) {
         println("✅ Succeed - $name")
     } else {
