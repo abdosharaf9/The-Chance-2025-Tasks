@@ -44,13 +44,13 @@ fun main() {
 
     check(
         name = "Given an empty grid, when validating, then it should return false",
-        result = isSudokuGridValid(emptyList()),
+        result = validateSudokuGrid(emptyList()),
         correctResult = false
     )
 
     check(
         name = "Given a grid with all cells are empty, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             List(9) { List(9) { '-' } }
         ),
         correctResult = true
@@ -58,7 +58,7 @@ fun main() {
 
     check(
         name = "Given a non square grid, when validating, then it should return false", // 8 * 9
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf(
                 listOf('-', '-', '-', '-', '-', '-', '2', '-', '-'),
                 listOf('-', '8', '-', '-', '-', '7', '-', '9', '-'),
@@ -75,7 +75,7 @@ fun main() {
 
     check(
         name = "Given a single row grid, when validating, then it should return false", // 1 * 9
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf(
                 listOf('-', '-', '-', '-', '-', '-', '2', '-', '-')
             )
@@ -85,7 +85,7 @@ fun main() {
 
     check(
         name = "Given a single column grid, when validating, then it should return false", // 9 * 1
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf(
                 listOf('-'),
                 listOf('-'),
@@ -109,7 +109,7 @@ fun main() {
 
     check(
         name = "Given a grid with an empty row, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row is empty
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 emptyList(),
@@ -127,7 +127,7 @@ fun main() {
 
     check(
         name = "Given a grid with different row sizes, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The third row has 7 cells not 9
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -145,7 +145,7 @@ fun main() {
 
     check(
         name = "Given a grid with a row that has empty cells, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row has an empty cell (first and fourth cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('-', '8', '3', '-', '5', '7', '1', '9', '6'),
@@ -163,7 +163,7 @@ fun main() {
 
     check(
         name = "Given a grid with a row that has an invalid special character, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row has an invalid special character (first cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('/', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -181,7 +181,7 @@ fun main() {
 
     check(
         name = "Given a grid with a row that has an invalid character, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row has an invalid character (first cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('a', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -199,7 +199,7 @@ fun main() {
 
     check(
         name = "Given a grid with a row that has an invalid number, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row has an invalid number (first cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('0', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -217,7 +217,7 @@ fun main() {
 
     check(
         name = "Given a grid with a duplicate in a single row, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row has a duplicate (first and second cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '4', '3', '2', '5', '7', '1', '9', '6'),
@@ -235,7 +235,7 @@ fun main() {
 
     check(
         name = "Given a grid with multiple duplicates in a single row, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second row has multiple duplicates (first, second, third, and fourth cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '4', '2', '2', '5', '7', '1', '9', '6'),
@@ -253,7 +253,7 @@ fun main() {
 
     check(
         name = "Given a grid with multiple rows have duplicates, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The second and third rows have duplicates (first and second cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '4', '3', '2', '5', '7', '1', '9', '6'),
@@ -277,7 +277,7 @@ fun main() {
 
     check(
         name = "Given a grid with an empty column, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column is empty
                 listOf('-', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('-', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -295,7 +295,7 @@ fun main() {
 
     check(
         name = "Given a grid with a column that has an empty cell, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column has an empty cell (second and fourth cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('-', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -313,7 +313,7 @@ fun main() {
 
     check(
         name = "Given a grid with a column that has an invalid special character, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column has an invalid special character (second cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('/', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -331,7 +331,7 @@ fun main() {
 
     check(
         name = "Given a grid with a column that has an invalid character, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column has an invalid character (second cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('a', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -349,7 +349,7 @@ fun main() {
 
     check(
         name = "Given a grid with a column that has an invalid number, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column has an invalid number (second cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('0', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -367,7 +367,7 @@ fun main() {
 
     check(
         name = "Given a grid with a duplicate in a single column, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column has a duplicate (first and second cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('9', '8', '3', '2', '5', '7', '1', '-', '6'),
@@ -385,7 +385,7 @@ fun main() {
 
     check(
         name = "Given a grid with multiple duplicates in a single column, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first column has multiple duplicates (first, second, third, and fourth cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('9', '8', '3', '2', '5', '7', '1', '-', '6'),
@@ -403,7 +403,7 @@ fun main() {
 
     check(
         name = "Given a grid with multiple columns have duplicates, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first and second columns have duplicates (first and second cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('9', '8', '3', '2', '5', '7', '1', '-', '6'),
@@ -427,7 +427,7 @@ fun main() {
 
     check(
         name = "Given a grid with a subgrid that has an empty cell, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The top-left subgrid has an empty cell (middle cell)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '-', '3', '2', '5', '7', '1', '9', '6'),
@@ -445,7 +445,7 @@ fun main() {
 
     check(
         name = "Given a grid with a subgrid that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The top-left subgrid has a duplicate (first and last cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -463,7 +463,7 @@ fun main() {
 
     check(
         name = "Given a grid with multiple subgrids have a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The top-left and top-right subgrids have a duplicate number (first and second cells in each one)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '8', '3', '-', '5', '7', '1', '2', '6'),
@@ -487,7 +487,7 @@ fun main() {
 
     check(
         name = "Given a valid grid, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf(
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '8', '3', '2', '5', '7', '1', '9', '6'),
@@ -511,7 +511,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 4 * 4 with all cells are empty, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             List(4) { List(4) { '-' } }
         ),
         correctResult = true
@@ -519,7 +519,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 4 * 4 with a row that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The first row has a duplicate (first and last cells)
                 listOf('1', '-', '-', '1'),
                 listOf('-', '3', '-', '2'),
@@ -532,7 +532,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 4 * 4 with a column that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The last column has a duplicate (first and second cells)
                 listOf('1', '-', '-', '2'),
                 listOf('-', '3', '-', '2'),
@@ -545,7 +545,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 4 * 4 with a subgrid that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf( // The top-left subgrid has a duplicate (first and last cells)
                 listOf('1', '-', '-', '-'),
                 listOf('-', '1', '-', '2'),
@@ -558,7 +558,7 @@ fun main() {
 
     check(
         name = "Given a valid grid of size 4 * 4, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             listOf(
                 listOf('1', '-', '-', '-'),
                 listOf('-', '3', '-', '2'),
@@ -569,7 +569,6 @@ fun main() {
         correctResult = true
     )
 
-
     // endregion
 
 
@@ -578,7 +577,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 16 * 16 with all cells are empty, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             List(16) { MutableList(16) { '-' } }
         ),
         correctResult = true
@@ -586,7 +585,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 16 * 16 with a row that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             // The first row has a duplicate (first and second cells)
             List(16) { MutableList(16) { '-' } }.also {
                 it[0][0] = 'A'
@@ -598,7 +597,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 16 * 16 with a column that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             // The last column has a duplicate (first and fourth cells)
             List(16) { MutableList(16) { '-' } }.also {
                 it[0][0] = 'G'
@@ -610,7 +609,7 @@ fun main() {
 
     check(
         name = "Given a grid of size 16 * 16 with a subgrid that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             // The top-left subgrid has a duplicate (first and last cells)
             List(16) { MutableList(16) { '-' } }.also {
                 it[0][0] = 'D'
@@ -622,7 +621,7 @@ fun main() {
 
     check(
         name = "Given a valid grid of size 16 * 16, when validating, then it should return true",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             List(16) { MutableList(16) { '-' } }.also {
                 it[0][0] = '1'
                 it[5][12] = '5'
@@ -638,7 +637,7 @@ fun main() {
     println("\n25 * 25 Sudoku Tests:")
     check(
         name = "Given a grid of size 25 * 25 with a subgrid that has a duplicate, when validating, then it should return false",
-        result = isSudokuGridValid(
+        result = validateSudokuGrid(
             // The top-left subgrid has duplicates
             List(25) { MutableList(25) { '-' } }.also {
                 it[0][0] = 'P'
