@@ -13,7 +13,7 @@
             <img src="ipv4/IPv4%20Checker%20Flowchart.png" alt="IPv4 Checker Flowchart" title="IPv4 Checker Flowchart"/>
         </td>
         <td width="50%">
-            <img src="sudoko/Sudoku%20Checker%20Flowchart.png" alt="Sudoku Checker Flowchart" title="Sudoku Checker Flowchart"/>
+            <img src="sudoku/Sudoku%20Checker%20Flowchart.png" alt="Sudoku Checker Flowchart" title="Sudoku Checker Flowchart"/>
         </td>
     </tr>
 </table>

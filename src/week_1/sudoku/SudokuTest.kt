@@ -1,4 +1,4 @@
-package week_1.sudoko
+package week_1.sudoku
 
 /*
 Options for row/column/subgrid: null, empty, invalid size, invalid characters, invalid number range,

@@ -1,4 +1,4 @@
-package week_1.sudoko
+package week_1.sudoku
 
 import kotlin.math.sqrt
 
