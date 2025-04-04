@@ -5,5 +5,5 @@ fun main() {
 }
 
 fun isSudokuGridValid(grid: List<List<Char>>): Boolean {
-    return true
+    return false
 }

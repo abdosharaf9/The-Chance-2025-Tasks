@@ -6,32 +6,35 @@ Options for row/column/subgrid: null, empty, invalid size, invalid characters, i
 
 Invalid entire grid when:
     - the grid is null ==> can't happen in my code
-    - the grid is totally empty (there are no cells)
-    - it's not a square grid, for example: 8 * 9, single row (1 * 9), or single column (9 * 1)
+    - the grid is totally empty (there are no cells) -> false
+    - all cells are empty (have '-') -> true
+    - it's not a square grid, for example: 8 * 9, single row (1 * 9), or single column (9 * 1) -> false
 
 Invalid row cases:
     - the row in null ==> can't happen in my code
-    - the row is empty
-    - not all rows are the same size
-    - contains an empty cell
-    - contains a character out of the range 1:size, for example, '0' or 'a'
-    - contains duplicate numbers
-    - contains multiple duplicate numbers
-    - multiple rows contain duplicates
+    - the row is empty (have no cells) -> false
+    - not all rows are the same size -> false
+    - contains an empty cell -> true
+    - contains a character out of the range 1:size, for example, '0' or 'a' -> false
+    - contains duplicate numbers -> false
+    - contains multiple duplicate numbers -> false
+    - multiple rows contain duplicates -> false
 
 Invalid column cases:
     - the column in null ==> can't happen in my code
-    - the column is empty
-    - not all columns are the same size ==> can't actually happen
-    - contains an empty cell
-    - contains a character out of the range 1:size, for example: '0', '/', or 'a'
-    - contains duplicate numbers
-    - contains multiple duplicate numbers
-    - multiple columns contain duplicates
+    - the column is empty ==> can't happen because columns aren't lists
+        • check if all the column cells are empty (have '-') -> true
+    - not all columns are the same size ==> can't actually happen -> false
+    - contains an empty cell (have '-') -> true
+    - contains a character out of the range 1:size, for example: '0', '/', or 'a' -> false
+    - contains duplicate numbers -> false
+    - contains multiple duplicate numbers -> false
+    - multiple columns contain duplicates -> false
 
 Invalid subgrid cases:
-    - contains duplicate numbers
-    - multiple subgrids contain duplicates
+    - contains an empty cell (have '-') -> true
+    - contains duplicate numbers -> false
+    - multiple subgrids contain duplicates -> false
 */
 
 
@@ -42,6 +45,14 @@ fun main() {
         name = "Given an empty grid, when validating, then it should return false",
         result = isSudokuGridValid(emptyList()),
         correctResult = false
+    )
+
+    check(
+        name = "Given a grid with all cells are empty, when validating, then it should return true",
+        result = isSudokuGridValid(
+            List(9) { List(9) { '-' } }
+        ),
+        correctResult = true
     )
 
     check(
@@ -130,11 +141,11 @@ fun main() {
     )
 
     check(
-        name = "Given a grid with a row that has an empty cell, when validating, then it should return false",
+        name = "Given a grid with a row that has empty cells, when validating, then it should return true",
         result = isSudokuGridValid(
-            listOf( // The second row has an empty cell (first cell)
+            listOf( // The second row has an empty cell (first and fourth cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
-                listOf('-', '8', '3', '2', '5', '7', '1', '9', '6'),
+                listOf('-', '8', '3', '-', '5', '7', '1', '9', '6'),
                 listOf('6', '1', '2', '8', '4', '9', '5', '3', '7'),
                 listOf('1', '7', '8', '3', '6', '4', '9', '5', '2'),
                 listOf('5', '2', '4', '9', '7', '1', '3', '6', '8'),
@@ -144,7 +155,7 @@ fun main() {
                 listOf('7', '3', '6', '1', '8', '5', '4', '2', '9')
             )
         ),
-        correctResult = false
+        correctResult = true
     )
 
     check(
@@ -261,7 +272,7 @@ fun main() {
     println("\nColumns Tests:")
     // region Invalid Column
     check(
-        name = "Given a grid with an empty column, when validating, then it should return false",
+        name = "Given a grid with an empty column, when validating, then it should return true",
         result = isSudokuGridValid(
             listOf( // The first column is empty
                 listOf('-', '5', '7', '6', '1', '3', '2', '8', '4'),
@@ -275,17 +286,17 @@ fun main() {
                 listOf('-', '3', '6', '1', '8', '5', '4', '2', '9')
             )
         ),
-        correctResult = false
+        correctResult = true
     )
 
     check(
-        name = "Given a grid with a column that has an empty cell, when validating, then it should return false",
+        name = "Given a grid with a column that has an empty cell, when validating, then it should return true",
         result = isSudokuGridValid(
-            listOf( // The first column has an empty cell (second cell)
+            listOf( // The first column has an empty cell (second and fourth cells)
                 listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('-', '8', '3', '2', '5', '7', '1', '9', '6'),
                 listOf('6', '1', '2', '8', '4', '9', '5', '3', '7'),
-                listOf('1', '7', '8', '3', '6', '4', '9', '5', '2'),
+                listOf('-', '7', '8', '3', '6', '4', '9', '5', '2'),
                 listOf('5', '2', '4', '9', '7', '1', '3', '6', '8'),
                 listOf('3', '6', '9', '5', '2', '8', '7', '4', '1'),
                 listOf('8', '4', '5', '7', '9', '2', '6', '1', '3'),
@@ -293,7 +304,7 @@ fun main() {
                 listOf('7', '3', '6', '1', '8', '5', '4', '2', '9')
             )
         ),
-        correctResult = false
+        correctResult = true
     )
 
     check(
@@ -410,12 +421,30 @@ fun main() {
     println("\nSubgrid Tests:")
     // region Invalid Subgrid
     check(
+        name = "Given a grid with a subgrid that has an empty cell, when validating, then it should return true",
+        result = isSudokuGridValid(
+            listOf( // The top-left subgrid has an empty cell (middle cell)
+                listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
+                listOf('4', '-', '3', '2', '5', '7', '1', '9', '6'),
+                listOf('6', '1', '2', '8', '4', '9', '5', '3', '7'),
+                listOf('1', '7', '8', '3', '6', '4', '9', '5', '2'),
+                listOf('5', '2', '4', '9', '7', '1', '3', '6', '8'),
+                listOf('3', '6', '9', '5', '2', '8', '7', '4', '1'),
+                listOf('8', '4', '5', '7', '9', '2', '6', '1', '3'),
+                listOf('2', '9', '1', '4', '3', '6', '8', '7', '5'),
+                listOf('7', '3', '6', '1', '8', '5', '4', '2', '9')
+            )
+        ),
+        correctResult = true
+    )
+
+    check(
         name = "Given a grid with a subgrid that has a duplicate, when validating, then it should return false",
         result = isSudokuGridValid(
-            listOf( // The top-left subgrid has a duplicate (first and second cells)
-                listOf('9', '9', '7', '6', '1', '3', '2', '8', '4'),
+            listOf( // The top-left subgrid has a duplicate (first and last cells)
+                listOf('9', '5', '7', '6', '1', '3', '2', '8', '4'),
                 listOf('4', '8', '3', '2', '5', '7', '1', '9', '6'),
-                listOf('6', '1', '2', '8', '4', '9', '5', '3', '7'),
+                listOf('6', '1', '9', '8', '4', '9', '5', '3', '7'),
                 listOf('1', '7', '8', '3', '6', '4', '9', '5', '2'),
                 listOf('5', '2', '4', '9', '7', '1', '3', '6', '8'),
                 listOf('3', '6', '9', '5', '2', '8', '7', '4', '1'),
