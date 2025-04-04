@@ -1,5 +1,7 @@
 package week_1.sudoko
 
+import kotlin.math.sqrt
+
 fun main() {
 
 }
@@ -10,32 +12,41 @@ fun isSudokuGridValid(grid: List<List<Char>>): Boolean {
     }
 
     val size = grid.size
-    if (size != 9) {
+    val subGridSize = sqrt(size.toDouble()).toInt()
+    if (subGridSize * subGridSize != size) {
         return false
     }
 
+    val cellRange = if (size == 16) {
+        (('1'..'9') + ('A'..'G') + ('a'..'g')).toSet()
+    } else {
+        (('1'..size.digitToChar())).toSet()
+    } + '-'
+
+    // Check rows
     for (row in grid) {
         if (row.isEmpty() || row.size != size) {
             return false
         }
 
-        if (!checkCellsList(row)) {
+        if (!checkCellsList(row, cellRange)) {
             return false
         }
     }
 
+    // Check columns
     for (col in 0..<size) {
         val curCol = mutableListOf<Char>()
         for (row in 0..<size) {
             curCol.add(grid[row][col])
         }
 
-        if (!checkCellsList(curCol)) {
+        if (!checkCellsList(curCol, cellRange)) {
             return false
         }
     }
 
-    val subGridSize = 3
+    // Check subgrids
     for (startRow in 0..<size step subGridSize) {
         for (startCol in 0..<size step subGridSize) {
             val seen = mutableListOf<Char>()
@@ -43,7 +54,7 @@ fun isSudokuGridValid(grid: List<List<Char>>): Boolean {
             for (row in startRow..<startRow + subGridSize) {
                 for (col in startCol..<startCol + subGridSize) {
                     val cell = grid[row][col]
-                    if (cell in seen || !checkSingleCell(cell)) {
+                    if (cell in seen || cell !in cellRange) {
                         return false
                     }
 
@@ -58,11 +69,11 @@ fun isSudokuGridValid(grid: List<List<Char>>): Boolean {
     return true
 }
 
-private fun checkCellsList(cells: List<Char>): Boolean {
+private fun checkCellsList(cells: List<Char>, cellRange: Set<Char>): Boolean {
     val seen = mutableListOf<Char>()
 
     for (cell in cells) {
-        if (cell in seen || !checkSingleCell(cell)) {
+        if (cell in seen || cell !in cellRange) {
             return false
         }
 
@@ -72,13 +83,4 @@ private fun checkCellsList(cells: List<Char>): Boolean {
     }
 
     return true
-}
-
-private fun checkSingleCell(cell: Char): Boolean {
-    // TODO: Change the range to accept multiple sizes!!
-    return when (cell) {
-        '-' -> true
-        in '1'..'9' -> true
-        else -> false
-    }
 }
