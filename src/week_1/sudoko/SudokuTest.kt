@@ -39,8 +39,9 @@ Invalid subgrid cases:
 
 
 fun main() {
-    println("Grid Tests:")
     // region Invalid Grid
+    println("Grid Tests:")
+
     check(
         name = "Given an empty grid, when validating, then it should return false",
         result = isSudokuGridValid(emptyList()),
@@ -93,6 +94,7 @@ fun main() {
                 listOf('-'),
                 listOf('-'),
                 listOf('-'),
+                listOf('5'),
                 listOf('-')
             )
         ),
@@ -102,8 +104,9 @@ fun main() {
     // endregion
 
 
-    println("\nRows Tests:")
     // region Invalid Row
+    println("\nRows Tests:")
+
     check(
         name = "Given a grid with an empty row, when validating, then it should return false",
         result = isSudokuGridValid(
@@ -269,8 +272,9 @@ fun main() {
     // endregion
 
 
-    println("\nColumns Tests:")
     // region Invalid Column
+    println("\nColumns Tests:")
+
     check(
         name = "Given a grid with an empty column, when validating, then it should return true",
         result = isSudokuGridValid(
@@ -418,8 +422,9 @@ fun main() {
     // endregion
 
 
-    println("\nSubgrid Tests:")
     // region Invalid Subgrid
+    println("\nSubgrid Tests:")
+
     check(
         name = "Given a grid with a subgrid that has an empty cell, when validating, then it should return true",
         result = isSudokuGridValid(
@@ -477,8 +482,9 @@ fun main() {
     // endregion
 
 
-    println("\nValid Sudoku Tests:")
     // region Valid Grid
+    println("\nValid Sudoku Tests:")
+
     check(
         name = "Given a valid grid, when validating, then it should return true",
         result = isSudokuGridValid(
@@ -496,6 +502,188 @@ fun main() {
         ),
         correctResult = true
     )
+
+    // endregion
+
+
+    // region 4 * 4 Sudoku
+    println("\n4 * 4 Sudoku Tests: ")
+
+    check(
+        name = "Given a grid of size 4 * 4 with all cells are empty, when validating, then it should return true",
+        result = isSudokuGridValid(
+            List(4) { List(4) { '-' } }
+        ),
+        correctResult = true
+    )
+
+    check(
+        name = "Given a grid of size 4 * 4 with a row that has a duplicate, when validating, then it should return false",
+        result = isSudokuGridValid(
+            listOf( // The first row has a duplicate (first and last cells)
+                listOf('1', '-', '-', '1'),
+                listOf('-', '3', '-', '2'),
+                listOf('2', '-', '1', '-'),
+                listOf('-', '-', '4', '-')
+            )
+        ),
+        correctResult = false
+    )
+
+    check(
+        name = "Given a grid of size 4 * 4 with a column that has a duplicate, when validating, then it should return false",
+        result = isSudokuGridValid(
+            listOf( // The last column has a duplicate (first and second cells)
+                listOf('1', '-', '-', '2'),
+                listOf('-', '3', '-', '2'),
+                listOf('2', '-', '1', '-'),
+                listOf('-', '-', '4', '-')
+            )
+        ),
+        correctResult = false
+    )
+
+    check(
+        name = "Given a grid of size 4 * 4 with a subgrid that has a duplicate, when validating, then it should return false",
+        result = isSudokuGridValid(
+            listOf( // The top-left subgrid has a duplicate (first and last cells)
+                listOf('1', '-', '-', '-'),
+                listOf('-', '1', '-', '2'),
+                listOf('2', '-', '1', '-'),
+                listOf('-', '-', '4', '-')
+            )
+        ),
+        correctResult = false
+    )
+
+    check(
+        name = "Given a valid grid of size 4 * 4, when validating, then it should return true",
+        result = isSudokuGridValid(
+            listOf(
+                listOf('1', '-', '-', '-'),
+                listOf('-', '3', '-', '2'),
+                listOf('2', '-', '1', '-'),
+                listOf('-', '-', '4', '-')
+            )
+        ),
+        correctResult = true
+    )
+
+
+    // endregion
+
+
+    // region 16 * 16 Sudoku
+    println("\n16 * 16 Sudoku Tests: ")
+
+    check(
+        name = "Given a grid of size 16 * 16 with all cells are empty, when validating, then it should return true",
+        result = isSudokuGridValid(
+            List(16) { List(16) { '-' } }
+        ),
+        correctResult = true
+    )
+
+    check(
+        name = "Given a grid of size 16 * 16 with a row that has a duplicate, when validating, then it should return false",
+        result = isSudokuGridValid(
+            listOf( // The first row has a duplicate (first and second cells)
+                listOf('1', '1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-')
+            )
+        ),
+        correctResult = false
+    )
+
+    check(
+        name = "Given a grid of size 16 * 16 with a column that has a duplicate, when validating, then it should return false",
+        result = isSudokuGridValid(
+            listOf( // The last column has a duplicate (first and fourth cells)
+                listOf('1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('1', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-')
+            )
+        ),
+        correctResult = false
+    )
+
+    check(
+        name = "Given a grid of size 16 * 16 with a subgrid that has a duplicate, when validating, then it should return false",
+        result = isSudokuGridValid(
+            listOf( // The top-left subgrid has a duplicate (first and last cells)
+                listOf('1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '4', '1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-')
+            )
+        ),
+        correctResult = false
+    )
+
+    check(
+        name = "Given a valid grid of size 16 * 16, when validating, then it should return true",
+        result = isSudokuGridValid(
+            listOf(
+                listOf('1', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '3', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('2', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '4', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-'),
+                listOf('-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-', '-')
+            )
+        ),
+        correctResult = true
+    )
+
 
     // endregion
 }
